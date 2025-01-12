@@ -160,7 +160,7 @@ git push -u origin main
 
 1. Clone this repository:
     ```bash
-    git clone https://github.com/your-username/smartcertify-api-clean-architecture-dotnet9.git
+    git clone https://github.com/learnsmartcoding/smartcertify-api-clean-architecture-dotnet9
     ```
 
 2. Navigate to the project folder:
