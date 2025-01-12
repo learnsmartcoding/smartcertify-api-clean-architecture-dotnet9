@@ -1,0 +1,6 @@
+@LSC.SmartCertify.API_HostAddress = http://localhost:5063
+
+GET {{LSC.SmartCertify.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
