@@ -1,0 +1,17 @@
+﻿-- Episode 12 - Work for Viewers --
+
+As part of episode 12, we started with our CURD operations for Courses, Questions, and Choices. 
+We have implemented the CURD operations for Courses and Questions and Choices. With courses, we implemented fluent validation and automapper.
+
+Now, it's time to implement the missing check on fluent validation Questions and Choices.
+
+1. We need to check whether the incoming model's questionid, choiceid present in the database or not. 
+2. We need to check the model's questionid, choiceid present in the database or not and if not present, we should send
+404 not found response.
+3. Add the missing API response details as part of API documentation.
+4. We need to create a new end point where the question's choice can be an array. 
+Instead of inserting the choice one by one, we can insert multiple choices at once.
+
+
+-- End of Episode 12 --
+

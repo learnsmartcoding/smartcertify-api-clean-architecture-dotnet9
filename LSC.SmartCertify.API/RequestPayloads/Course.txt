@@ -1,0 +1,30 @@
+﻿[
+  {
+    "title": "Angular",
+    "description": "Angular is a powerful TypeScript-based platform and framework for building single-page client applications using HTML and TypeScript. It provides tools to build scalable, testable, and maintainable applications with features like two-way data binding, dependency injection, and a modular structure."
+  },
+  {
+    "title": "React",
+    "description": "React is a JavaScript library for building fast, responsive user interfaces for web applications. Developed by Facebook, React allows developers to create reusable UI components, manage application state effectively, and render dynamic views efficiently."
+  },
+  {
+    "title": "DotNet Core",
+    "description": ".NET Core is a cross-platform, high-performance, and open-source framework for building modern, cloud-based, and internet-connected applications. It supports multiple languages like C#, F#, and VB.NET and enables developers to deploy applications across Windows, Linux, and macOS."
+  },
+  {
+    "title": "EF Core",
+    "description": "Entity Framework Core (EF Core) is a lightweight, extensible, and cross-platform Object-Relational Mapper (ORM) for .NET. It simplifies database access by allowing developers to work with data as strongly-typed objects and LINQ queries rather than raw SQL queries."
+  },
+  {
+    "title": "JavaScript",
+    "description": "JavaScript is the language of the web, enabling developers to create dynamic and interactive content. It powers front-end frameworks, back-end development (via Node.js), and is essential for building modern, responsive, and scalable applications."
+  },
+  {
+    "title": "C#",
+    "description": "C# is a modern, object-oriented programming language developed by Microsoft. It is widely used for building Windows applications, web applications, games using Unity, and enterprise-grade software with .NET technologies."
+  },
+  {
+    "title": "Azure",
+    "description": "Microsoft Azure is a cloud computing platform offering services like virtual machines, storage, AI tools, and serverless computing. It helps businesses scale their applications, manage resources efficiently, and deploy cloud-native solutions with ease."
+  }
+]

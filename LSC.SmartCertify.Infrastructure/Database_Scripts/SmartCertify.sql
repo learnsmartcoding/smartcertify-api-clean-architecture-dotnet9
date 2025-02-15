@@ -23,6 +23,8 @@ CREATE TABLE UserProfile (
     LastName NVARCHAR(50) NOT NULL,
     Email NVARCHAR(100) NOT NULL,
 	AdObjId NVARCHAR(128) NOT NULL,
+    ProfileImageUrl NVARCHAR(500) NULL,
+    CreatedOn DATETIME2 NOT NULL CONSTRAINT DF_UserProfile_CreatedOn DEFAULT GETUTCDATE(),
     -- Add other user-related fields as needed
     CONSTRAINT PK_UserProfile_UserId PRIMARY KEY (UserId)
 );
@@ -167,3 +169,27 @@ CREATE TABLE ContactUs (
 	MessageDetail NVARCHAR(2000) NOT NULL,    
     CONSTRAINT PK_ContactUs_ContactUsId PRIMARY KEY (ContactUsId)    
 );
+
+
+-- Insert default roles
+USE [SmartCertify]
+GO
+
+INSERT INTO [dbo].[Roles]
+           ([RoleName])
+     VALUES
+           ('Admin')
+		   ,('Support')
+		   ,('Customer')
+		   ,('ReadOnly')
+GO
+
+INSERT INTO [dbo].[SmartApp]
+           ([AppName])
+     VALUES
+           ('SmartCertify')
+GO
+
+
+
+

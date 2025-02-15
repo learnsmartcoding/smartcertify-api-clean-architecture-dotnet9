@@ -9,5 +9,13 @@
   <ItemGroup>
     <ProjectReference Include="..\LSC.SmartCertify.Domain\LSC.SmartCertify.Domain.csproj" />
   </ItemGroup>
-
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="13.0.1" />
+		<PackageReference Include="FluentValidation" Version="11.11.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
+		<PackageReference Include="Microsoft.Identity.Web" Version="1.25.1" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Common\" />
+	</ItemGroup>
 </Project>

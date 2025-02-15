@@ -23,5 +23,5 @@ To Scaffold database as model to local project use below cmd.
 
 
 use this for locally installed SQL Express Dev DB
-dotnet ef dbcontext scaffold "Server=localhost\SQLEXPRESS;Initial Catalog=SmartCertify;Integrated Security=SSPI; MultipleActiveResultSets=true;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Entities -d
+dotnet ef dbcontext scaffold "Server=localhost\SQLEXPRESS;Initial Catalog=SmartCertify;Integrated Security=SSPI; MultipleActiveResultSets=true;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o EntitiesNew -d
 
