@@ -44,7 +44,7 @@ In this video, learn how to install SQL Express, SQL Server Management Studio (S
    An alternative to SSMS for working with SQL databases, designed for data professionals who prefer a cross-platform tool.
    - [Azure Data Studio](https://azure.microsoft.com/en-us/products/data-studio)
    - [Azure Data Studio Download Link](https://go.microsoft.com/fwlink/?linkid=2216158&clcid=0x409)
-
+   
 ---
 ---
 
@@ -145,10 +145,184 @@ git push -u origin main
     Pushes the main branch to the remote repository and sets it as the default upstream branch for future pushes/pulls.
 
 ---
+- ### **Save Money with Azure Policy: Restrict SQL Database to Basic Tier | Full Step-by-Step Guide**
+    In this step-by-step Azure tutorial, learn how to create and assign a custom Azure Policy to restrict SQL Database creation to the cost-effective Basic tier. Watch as we:
 
-## Project Setup
+    Create a new Azure Subscription
+    Define a custom Azure Policy with restrictions for SQL Databases
+    Assign the policy to the new subscription
+    Create an SQL Server and Database under the subscription
+    Test the policy enforcement by attempting to select a pricing tier other than Basic
+    This tutorial is perfect for Azure beginners, cloud administrators, and developers looking to manage resources effectively and control costs.
 
-### Requirements
+    📌 What You’ll Learn:
+
+    - What is Azure Policy?
+    - How to define and assign a custom policy
+    - Enforcing SQL Database SKU restrictions in Azure
+    - Testing policy functionality in real time
+ 
+  **Sample Policy Shown in the Video**
+```
+{
+  "properties": {
+    "displayName": "Restrict SQL Database SKU to Basic",
+    "policyType": "Custom",
+    "mode": "All",
+    "description": "This policy restricts the creation of Azure SQL Databases to the Basic SKU only.",
+    "metadata": {
+      "category": "SQL",
+      "createdBy": "your userid guid here",
+      "createdOn": "2025-01-10T19:16:33.2197985Z",
+      "updatedBy": null,
+      "updatedOn": null
+    },
+    "version": "1.0.0",
+    "parameters": {},
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Sql/servers/databases"
+          },
+          {
+            "not": {
+              "field": "Microsoft.Sql/servers/databases/sku.name",
+              "equals": "Basic"
+            }
+          }
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    },
+    "versions": [
+      "1.0.0"
+    ]
+  },
+  "id": "/subscriptions/your-subscription-id/providers/Microsoft.Authorization/policyDefinitions/yourid",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "ee15c7b5-dc76-43f2-aa9e-876f286a460c",
+  "systemData": {
+    "createdBy": "learnsmartcoding@gmail.com",
+    "createdByType": "User",
+    "createdAt": "2025-01-10T19:16:33.2054339Z",
+    "lastModifiedBy": "learnsmartcoding@gmail.com",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2025-01-10T19:16:33.2054339Z"
+  }
+}
+```
+
+
+
+- ### **Mastering Secure Azure SQL Database Connections Effortlessly**
+    Learn how to connect your Azure SQL Database to Azure Data Studio in this step-by-step tutorial! We’ll guide you through configuring the Azure SQL server firewall to allow your local system's IP address, ensuring secure and seamless access. Perfect for developers and cloud enthusiasts looking to manage Azure SQL databases efficiently.
+
+    📌 Topics Covered:
+
+    - Configuring the Azure SQL server firewall
+    - Finding your local IP address for firewall rules
+    - Connecting to Azure SQL Database using Azure Data Studio
+    - Troubleshooting common connectivity issues
+
+
+- ### **Mastering Angular 19 Standalone Components Quickly | Angular 19 first Episode**
+    Kickstart your Angular journey with this comprehensive beginner's guide! Learn how to set up your local environment by installing Node.js and Angular, create your first Angular project, and understand the basics of Angular components. This video simplifies key concepts and walks you through everything you need to know to start building Angular applications. Perfect for developers at any level!
+ 
+    - [Angular 19 Repo]( https://github.com/learnsmartcoding/smartcertify-ui-angular19)
+    - [YT Video](https://youtu.be/SwJ4RMQnJOo)
+
+- ### **Master Angular Data Binding and Directives | Complete Beginner's Guide**
+    Unlock the power of Angular with this comprehensive guide to data binding and directives. Learn how to efficiently bind data between your components and templates using interpolation, property binding, event binding, and two-way binding. Dive into Angular's powerful built-in directives like *ngIf, *ngFor, and explore the latest @if() syntax for cleaner and modern conditional rendering.  Whether you're new to Angular or looking to sharpen your skills, this tutorial is perfect for beginners. Start building interactive and dynamic web apps today!
+ 
+    - [Angular 19 Repo]( https://github.com/learnsmartcoding/smartcertify-ui-angular19)
+    - [YT Video](https://youtu.be/gnGPcTCn81w)
+
+- ### **Supercharge Your Angular 19 App with Lazy Loading Techniques & Routing**
+    Learn how to implement efficient and modern Angular Routing with Lazy Loading in Angular 19, designed for standalone components. In this video, we’ll cover how to set up dynamic routes, lazy load your components to optimize performance, and handle 404 pages with wildcard routes. Whether you're building small apps or large-scale enterprise solutions, understanding routing and lazy loading is essential for creating seamless, fast-loading applications. Perfect for beginners and intermediate Angular developers!
+ 
+    - [Angular 19 Repo]( https://github.com/learnsmartcoding/smartcertify-ui-angular19)
+    - [YT Video](https://youtu.be/pu44fnIompg)
+
+- ### **Build a Full Course App using Angular 19 - Interactive Demo!**
+    🚀 Explore the Complete User Journey in Our Course App!
+
+    In this demo, we walk you through how to create an interactive, real-world course app where users can:
+    ✅ Browse and select available courses
+    ✅ Start, pause, and resume tests
+    ✅ Complete tests and receive certifications
+    ✅ Access video references for deeper understanding
+
+    This app is built using the latest Angular 18 for the frontend and .NET Core 8 for the backend, integrating powerful features like Azure AD B2C for secure authentication and dynamic UI/UX design.
+
+    Whether you're looking to build a similar app or test your skills, this video is your perfect guide. Watch now and get ready to create an engaging and functional application for online learning!
+ 
+    - [Angular 19 Repo]( https://github.com/learnsmartcoding/smartcertify-ui-angular19)
+    - [YT Video](https://youtu.be/M_lCcGwrYlo)
+
+- ### **Mastering Angular Signals in 2025 for EASY State Management**
+    In this video, you'll learn all about Angular Signals, a new and powerful way to manage state and keep your UI in sync with data changes in Angular applications. Discover how Signals simplify the process of state management by automatically updating the UI when their value changes, making it easier and more efficient than ever to create reactive applications.
+
+    We also explore Computed Signals and Effects, which enable you to work with dynamic and real-time data efficiently. Plus, see a practical example with our Contacts Component to see Signals in action!
+
+ 
+    - [Angular 19 Repo](https://github.com/learnsmartcoding/smartcertify-ui-angular19)
+    - [YT Video](https://youtu.be/Wm2yRolfK8I)
+
+- ### **.NET Core 9 Web API – Build Full CRUD with PATCH | Clean Architecture & Fluent Validation**
+    🚀 Mastering .NET Core 9 Web API – Full CRUD with PATCH, Clean Architecture & Fluent Validation! - Episode 12
+
+    In this episode, we dive deep into .NET Core 9 Web API and implement 3 controllers with complete CRUD operations (GET, POST, PUT, DELETE, PATCH). We follow Clean Architecture principles, ensuring a scalable and maintainable API structure.
+
+    🔥 Key Topics Covered:
+    ✅ Implementing GET, POST, PUT, DELETE & PATCH endpoints in .NET Core 9
+    ✅ Using Fluent Validation for robust input validation
+    ✅ Applying Clean Architecture to structure the Web API efficiently
+    ✅ Handling partial updates (PATCH) properly
+    ✅ Ensuring best practices for API design and maintainability
+
+    📌 Whether you're a beginner or an experienced developer, this tutorial will help you build a well-structured, professional-grade Web API.
+ 
+    - [.Net 9 Web API Repo](https://github.com/learnsmartcoding/smartcertify-api-clean-architecture-dotnet9)
+    - [Angular 19 Repo](https://github.com/learnsmartcoding/smartcertify-ui-angular19)
+    - [App Demo](https://smartcertify-web.azurewebsites.net/home)
+    - [YT Video](https://youtu.be/lAVUy2U9QgY)
+
+- ### **Mastering API Calls In Angular With A Reusable Service**
+    In this video, we’ll build an Angular service to fetch data from a .NET Web API using HttpClient. We’ll cover best practices, how to handle API calls efficiently, and demonstrate a real-time example of fetching and displaying data in an Angular app. 🚀
+
+    👉 What You’ll Learn:
+    ✅ How to create an Angular service using ng generate service
+    ✅ Use HttpClient to call a .NET Web API
+    ✅ Implement best practices for API calls in Angular
+    ✅ Handle error responses and implement loading states
+    ✅ Display fetched data dynamically in an Angular component
+
+    💡 This is a must-watch for developers working with Angular & .NET Core APIs! Don’t forget to like, share, and subscribe for more hands-on tutorials. 🔥
+
+ 
+    - [Angular 19 Repo](https://github.com/learnsmartcoding/smartcertify-ui-angular19)
+    - [YT Video](https://youtu.be/kqHFDvnjbcw)
+
+-  ### **Angular Input() & Output() Explained | Parent-Child Communication with Filters**
+    In this video, Learn how to use @Input() and @Output() in Angular to enable smooth parent-child component communication. In this video, we demonstrate real-world filtering functionality using a course browsing example. The child component handles the filter selection, and the parent component updates the course list accordingly. Master Angular component interaction with this practical hands-on guide! 🚀
+
+    🔹 Topics Covered:
+    ✅ Understanding @Input() for passing data from parent to child
+    ✅ Using @Output() and EventEmitter for child-to-parent communication
+    ✅ Implementing a course filtering system using these concepts
+    ✅ Best practices for Angular component interaction
+
+ 
+    - [Angular 19 Repo](https://github.com/learnsmartcoding/smartcertify-ui-angular19)
+    - [YT Video](https://youtu.be/ThkG1Pkf_1s)
+
+### Project Setup
+
+#### Requirements
 - **.NET 9 SDK**
 - **Visual Studio 2022 or higher**
 - **SQL Server or SQL Server Express**

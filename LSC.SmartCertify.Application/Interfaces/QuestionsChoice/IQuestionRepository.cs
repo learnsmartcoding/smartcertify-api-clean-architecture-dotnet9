@@ -15,5 +15,6 @@ namespace LSC.SmartCertify.Application.Interfaces.QuestionsChoice
         Task<Question> AddQuestionAsync(Question question);
         Task UpdateQuestionAsync(Question question);
         Task DeleteQuestionAsync(Question question);
+        Task UpdateQuestionAndChoicesAsync(int id, QuestionDto dto);
     }
 }

@@ -54,8 +54,20 @@ namespace LSC.SmartCertify.Application.Services
             await _repository.DeleteQuestionAsync(question);
         }
 
-      
+        public async Task<QuestionDto> AddQuestionAndChoicesAsync(QuestionDto dto)
+        {
+            var question = _mapper.Map<Question>(dto);
+            question.Choices = dto.Choices.Select(c => _mapper.Map<Choice>(c)).ToList();
 
-        
+            await _repository.AddQuestionAsync(question);
+            _mapper.Map(question, dto);
+            return dto;
+        }
+
+        public async Task UpdateQuestionAndChoicesAsync(int id, QuestionDto dto)
+        {
+            await _repository.UpdateQuestionAndChoicesAsync(id, dto);           
+        }
+
     }
 }
