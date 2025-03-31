@@ -1,4 +1,5 @@
-﻿using LSC.SmartCertify.Application.DTOs;
+﻿using LSC.SmartCertify.API.Filters.LSC.OnlineCourse.API.Common;
+using LSC.SmartCertify.Application.DTOs;
 using LSC.SmartCertify.Application.Interfaces.Common;
 using LSC.SmartCertify.Application.Interfaces.QuestionsChoice;
 using Microsoft.AspNetCore.Authorization;
@@ -44,7 +45,7 @@ namespace LSC.SmartCertify.API.Controllers
         [HttpPost]
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
         [Authorize]
-        //[AdminRole]
+        [AdminRole]
         public async Task<IActionResult> CreateQuestion([FromBody] CreateQuestionDto dto)
         {
             await _service.AddQuestionAsync(dto);
@@ -54,7 +55,7 @@ namespace LSC.SmartCertify.API.Controllers
         [HttpPut("{id}")]
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
         [Authorize]
-        //[AdminRole]
+        [AdminRole]
         public async Task<IActionResult> UpdateQuestion(int id, [FromBody] UpdateQuestionDto dto)
         {
             await _service.UpdateQuestionAsync(id, dto);
@@ -64,7 +65,7 @@ namespace LSC.SmartCertify.API.Controllers
         [HttpDelete("{id}")]
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
         [Authorize]
-        //[AdminRole]
+        [AdminRole]
         public async Task<IActionResult> DeleteQuestion(int id)
         {
             await _service.DeleteQuestionAsync(id);
@@ -75,7 +76,7 @@ namespace LSC.SmartCertify.API.Controllers
         [HttpPost("CreateQuestionChoices")]
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
         [Authorize]
-        //[AdminRole]
+        [AdminRole]
         public async Task<IActionResult> CreateQuestionChoices([FromBody] QuestionDto dto)
         {
             var createdResource = await _service.AddQuestionAndChoicesAsync(dto);
@@ -85,7 +86,7 @@ namespace LSC.SmartCertify.API.Controllers
         [HttpPut("UpdateQuestionAndChoices/{id}")]
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
         [Authorize]
-        //[AdminRole]
+        [AdminRole]
         public async Task<IActionResult> UpdateQuestionAndChoices(int id, [FromBody] QuestionDto dto)
         {
             await _service.UpdateQuestionAndChoicesAsync(id, dto);

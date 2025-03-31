@@ -320,6 +320,49 @@ git push -u origin main
     - [Angular 19 Repo](https://github.com/learnsmartcoding/smartcertify-ui-angular19)
     - [YT Video](https://youtu.be/ThkG1Pkf_1s)
 
+-  ### **Azure AD B2C Makes Securing Angular And .NET Apps Easy And FAST**
+    In this video, learn how to configure Azure AD B2C in the Azure portal for Angular and .NET Web API applications. We will walk through the step-by-step setup, integrating Azure AD B2C authentication into both frontend (Angular) and backend (.NET Core Web API) applications. Finally, we will test and demo the authentication flow to see it in action!
+
+    🔹 What You'll Learn:
+    ✅ Azure AD B2C setup in the Azure portal
+    ✅ App registrations for Angular and .NET Web API
+    ✅ Configuring authentication in Angular using MSAL
+    ✅ Securing .NET Web API with Azure AD B2C
+    ✅ Testing login, logout, and API authorization
+
+    📌 Whether you're a beginner or an experienced developer, this tutorial will help you seamlessly integrate Azure AD B2C authentication in your apps!
+    - [YT Video](https://youtu.be/V-3WAJd67EM) 
+
+-  ### **Deploy Your .NET Core 9 Web API to Azure For FREE | CI/CD with Azure DevOps**
+     In this step-by-step tutorial, we will deploy a .NET Core 9 Web API to Azure App Service using Azure DevOps CI/CD. We'll cover everything from setting up a free F1 App Service, managing code in Azure DevOps, creating a CI/CD pipeline, using a service principal for secure deployment, and configuring connection strings in environment settings.
+
+    🔹 What You’ll Learn in This Video:
+    ✅ Create a .NET Core 9 Web API Azure App Service (Free F1 Plan)
+    ✅ Move your project from GitHub to Azure DevOps
+    ✅ Set up CI/CD Pipelines for automated deployment
+    ✅ Create a Service Principal for secure authentication
+    ✅ Configure Build & Release Pipelines to deploy code
+    ✅ Manage environment variables & connection strings in Azure
+
+    By the end of this video, your .NET Core 9 Web API will be live on Azure, fully automated with Azure DevOps CI/CD! 🚀
+ 
+    - [YT Video](https://youtu.be/8tYvsO4emAc) 
+    
+-  ### **Angular Input() & Output() Explained | Parent-Child Communication with Filters**
+    In this step-by-step tutorial, we will deploy an Angular 19 app to Azure App Service using Azure DevOps CI/CD. This video covers the complete process, from creating a free F1 App Service, setting up Azure DevOps repositories, configuring CI/CD pipelines, using a service principal for secure deployment, and handling environment settings in Azure.
+
+    🔹 What You’ll Learn in This Video:
+    ✅ Create an Angular 19 App Service on Azure (Free F1 Plan)
+    ✅ Move project from GitHub to Azure DevOps
+    ✅ Set up CI/CD Pipelines for automated Angular deployment
+    ✅ Use Service Principal for secure authentication
+    ✅ Configure Build & Release Pipelines to deploy Angular
+    ✅ Manage environment variables & settings in Azure
+
+    By the end of this video, your Angular 19 app will be live on Azure, fully automated with Azure DevOps CI/CD! 🚀
+ - 
+     - [YT Video](https://youtu.be/IuELMXSAslo) 
+
 ### Project Setup
 
 #### Requirements

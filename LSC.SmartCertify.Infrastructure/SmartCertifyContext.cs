@@ -44,7 +44,7 @@ public partial class SmartCertifyContext : DbContext
 
     public virtual DbSet<UserRole> UserRoles { get; set; }
 
-   
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<BannerInfo>(entity =>
@@ -165,7 +165,8 @@ public partial class SmartCertifyContext : DbContext
         modelBuilder.Entity<UserProfile>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("PK_UserProfile_UserId");
-
+            //entity.Property(e => e.ProfilePictureUrl).HasMaxLength(500);
+            entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.DisplayName).HasDefaultValue("Guest");
         });
 

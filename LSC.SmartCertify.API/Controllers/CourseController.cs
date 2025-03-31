@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using LSC.SmartCertify.API.Filters.LSC.OnlineCourse.API.Common;
 using LSC.SmartCertify.Application.DTOs;
 using LSC.SmartCertify.Application.Interfaces.Courses;
 using Microsoft.AspNetCore.Authorization;
@@ -37,7 +38,7 @@ namespace LSC.SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<CourseDto>>> GetCourses()
-        {
+        {            
             var mainCourses = new List<string> { "Angular", ".NET Core", "Azure" };
             var model = await _service.GetAllCoursesAsync();
 
@@ -92,7 +93,7 @@ namespace LSC.SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]        
-        //[AdminRole]
+        [AdminRole]
         public async Task<IActionResult> CreateCourse([FromBody] CreateCourseDto createCourseDto)
         {
             var validationResult = await validator.ValidateAsync(createCourseDto);
@@ -121,7 +122,7 @@ namespace LSC.SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
-        //[AdminRole]
+        [AdminRole]
         public async Task<IActionResult> UpdateCourse(int id, [FromBody] UpdateCourseDto updateCourseDto)
         {
             var validationResult = await updateValidator.ValidateAsync(updateCourseDto);
@@ -147,7 +148,7 @@ namespace LSC.SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
-        //[AdminRole]
+        [AdminRole]
         public async Task<IActionResult> DeleteCourse(int id)
         {
             await _service.DeleteCourseAsync(id);
@@ -167,7 +168,7 @@ namespace LSC.SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
-        //[AdminRole]
+        [AdminRole]
         public async Task<IActionResult> UpdateDescription([FromRoute] int id, [FromBody] CourseUpdateDescriptionDto model)
         {
             await _service.UpdateDescriptionAsync(id, model.Description);

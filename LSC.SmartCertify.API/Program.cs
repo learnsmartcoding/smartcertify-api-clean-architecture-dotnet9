@@ -1,25 +1,36 @@
 
 using FluentValidation;
 using LSC.SmartCertify.API.Filters;
+using LSC.SmartCertify.API.Middlewares;
 using LSC.SmartCertify.Application;
 using LSC.SmartCertify.Application.DTOValidations;
 using LSC.SmartCertify.Application.Interfaces.Certification;
 using LSC.SmartCertify.Application.Interfaces.Common;
 using LSC.SmartCertify.Application.Interfaces.Courses;
+using LSC.SmartCertify.Application.Interfaces.Graph;
+using LSC.SmartCertify.Application.Interfaces.ManageUser;
 using LSC.SmartCertify.Application.Interfaces.QuestionsChoice;
+using LSC.SmartCertify.Application.Interfaces.Storage;
 using LSC.SmartCertify.Application.Services;
 using LSC.SmartCertify.Application.Services.Certification;
 using LSC.SmartCertify.Application.Services.Common;
+using LSC.SmartCertify.Application.Services.Graph;
+using LSC.SmartCertify.Application.Services.ManageUser;
 using LSC.SmartCertify.Infrastructure;
+using LSC.SmartCertify.Infrastructure.BackgroundServices;
+using LSC.SmartCertify.Infrastructure.Services.Storage;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Logging;
 using Scalar.AspNetCore;
 using Serilog;
 using Serilog.Templates;
+using System.Net;
 using System.Text.Json.Serialization;
+using TodoApp.WebAPI.Filters;
 
 namespace LSC.SmartCertify.API
 {
@@ -55,6 +66,7 @@ namespace LSC.SmartCertify.API
                 Log.Information("Starting the SmartCertify API...");
 
 
+
                 // Add services to the container.
 
                 //use this for real database on your sql server
@@ -70,16 +82,20 @@ namespace LSC.SmartCertify.API
                 builder.Services.AddControllers(options =>
                 {
                     options.Filters.Add<ValidationFilter>(); // Add your custom validation filter
-                    
+                    options.Filters.Add<GlobalExceptionFilter>();
                 }).ConfigureApiBehaviorOptions(options =>
                 {
                     options.SuppressModelStateInvalidFilter = true; // Disable automatic validation
                 })
-                  .AddJsonOptions(options =>
-                  {
-                      options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-                      options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                  });               
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
+
+                //builder.Services.AddHttpClient<YouTubeService>();
+                //builder.Services.Configure<YouTubeOptions>(builder.Configuration.GetSection("YouTube"));
+
 
                 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
                 builder.Services.AddEndpointsApiExplorer();
@@ -95,8 +111,11 @@ namespace LSC.SmartCertify.API
                 builder.Services.AddScoped<IChoiceRepository, ChoiceRepository>();
                 builder.Services.AddScoped<IExamRepository, ExamRepository>();
                 builder.Services.AddScoped<IExamService, ExamService>();
-
+                builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+                builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
                 builder.Services.AddScoped<IUserClaims, UserClaims>();
+                builder.Services.AddTransient<RequestBodyLoggingMiddleware>();
+                builder.Services.AddTransient<ResponseBodyLoggingMiddleware>();                          
 
                 // Add FluentValidation
                 builder.Services.AddValidatorsFromAssemblyContaining<CreateCourseValidator>();
@@ -152,16 +171,23 @@ namespace LSC.SmartCertify.API
 
                 builder.Services.AddHttpClient();
 
+                builder.Services.AddScoped<IStorageService, StorageService>();
+                builder.Services.AddSingleton<GraphAuthService>();
+                builder.Services.AddScoped<IGraphAuthService, GraphAuthService>();
+                builder.Services.AddScoped<IGraphService, GraphService>();
+
+                // Register the background service
+                builder.Services.AddHostedService<NotificationBackgroundService>();
+                builder.Services.AddHostedService<OnboardUserBackgroundService>();
+
                 // In production, modify this with the actual domains you want to allow
                 builder.Services.AddCors(options =>
                 {
                     options.AddPolicy("default", policy =>
                     {
                         policy.AllowAnyOrigin()
-                              //WithOrigins("http://localhost:4200", "https://smartlearnbykarthik.azurewebsites.net") // Corrected frontend URL without trailing slash
                               .AllowAnyHeader()
                               .AllowAnyMethod();
-                        //.AllowCredentials();  // Required for SignalR
                     });
                 });
 
@@ -171,6 +197,24 @@ namespace LSC.SmartCertify.API
                 // Configure the HTTP request pipeline.
                 app.UseCors("default");
 
+                app.UseExceptionHandler(errorApp =>
+                {
+                    errorApp.Run(async context =>
+                    {
+                        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+                        var exception = exceptionHandlerPathFeature?.Error;
+
+                        Log.Error(exception, "Unhandled exception occurred. {ExceptionDetails}", exception?.ToString());
+                        Console.WriteLine(exception?.ToString());
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        await context.Response.WriteAsync("An unexpected error occurred. Please try again later.");
+                    });
+                });
+
+
+                app.UseMiddleware<RequestResponseLoggingMiddleware>();
+                app.UseMiddleware<RequestBodyLoggingMiddleware>();
+                app.UseMiddleware<ResponseBodyLoggingMiddleware>();
 
                 // Configure the HTTP request pipeline.
                 //if (app.Environment.IsDevelopment())

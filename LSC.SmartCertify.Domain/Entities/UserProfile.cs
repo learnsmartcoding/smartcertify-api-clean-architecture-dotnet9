@@ -27,6 +27,11 @@ public partial class UserProfile
     [StringLength(128)]
     public string AdObjId { get; set; } = null!;
 
+    [StringLength(500)]
+    public string? ProfileImageUrl { get; set; }
+
+    public DateTime CreatedOn { get; set; }
+
     [InverseProperty("CreatedByNavigation")]
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
