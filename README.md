@@ -1,4 +1,4 @@
-﻿# SmartCertify Clean Architecture .NET 9 API
+# SmartCertify Clean Architecture .NET 9 API
 
 Welcome to the **SmartCertify Clean Architecture .NET 9 API** project! This repository showcases how to build a robust API with a clean architecture using .NET 9, following best practices to design scalable and maintainable applications. 
 
@@ -352,16 +352,183 @@ git push -u origin main
     In this step-by-step tutorial, we will deploy an Angular 19 app to Azure App Service using Azure DevOps CI/CD. This video covers the complete process, from creating a free F1 App Service, setting up Azure DevOps repositories, configuring CI/CD pipelines, using a service principal for secure deployment, and handling environment settings in Azure.
 
     🔹 What You’ll Learn in This Video:
-    ✅ Create an Angular 19 App Service on Azure (Free F1 Plan)
-    ✅ Move project from GitHub to Azure DevOps
-    ✅ Set up CI/CD Pipelines for automated Angular deployment
-    ✅ Use Service Principal for secure authentication
-    ✅ Configure Build & Release Pipelines to deploy Angular
-    ✅ Manage environment variables & settings in Azure
+    - ✅ Create an Angular 19 App Service on Azure (Free F1 Plan)
+    - ✅ Move project from GitHub to Azure DevOps
+    - ✅ Set up CI/CD Pipelines for automated Angular deployment
+    - ✅ Use Service Principal for secure authentication
+    - ✅ Configure Build & Release Pipelines to deploy Angular
+    - ✅ Manage environment variables & settings in Azure
 
     By the end of this video, your Angular 19 app will be live on Azure, fully automated with Azure DevOps CI/CD! 🚀
- - 
      - [YT Video](https://youtu.be/IuELMXSAslo) 
+
+- ### **Azure AD B2C Makes Securing Angular And .NET Apps Easy And FAST**
+
+  In this video, learn how to configure Azure AD B2C in the Azure portal for Angular and .NET Web API applications. We will walk through the step-by-step setup, integrating Azure AD B2C authentication into both frontend (Angular) and backend (.NET Core Web API) applications. Finally, we will test and demo the authentication flow to see it in action!
+
+  🔹 What You'll Learn:
+  ✅ Azure AD B2C setup in the Azure portal
+  ✅ App registrations for Angular and .NET Web API
+  ✅ Configuring authentication in Angular using MSAL
+  ✅ Securing .NET Web API with Azure AD B2C
+  ✅ Testing login, logout, and API authorization
+
+  📌 Whether you're a beginner or an experienced developer, this tutorial will help you seamlessly integrate Azure AD B2C authentication in your apps!
+
+-  ### **Deploy Your .NET Core 9 Web API to Azure For FREE | CI/CD with Azure DevOps**
+     In this step-by-step tutorial, we will deploy a .NET Core 9 Web API to Azure App Service using Azure DevOps CI/CD. We'll cover everything from setting up a free F1 App Service, managing code in Azure DevOps, creating a CI/CD pipeline, using a service principal for secure deployment, and configuring connection strings in environment settings.
+
+    🔹 What You’ll Learn in This Video:
+    -  ✅ Create a .NET Core 9 Web API Azure App Service (Free F1 Plan)
+    -  ✅ Move your project from GitHub to Azure DevOps
+    -  ✅ Set up CI/CD Pipelines for automated deployment
+    -  ✅ Create a Service Principal for secure authentication
+    -  ✅ Configure Build & Release Pipelines to deploy code
+    -  ✅ Manage environment variables & connection strings in Azure
+
+    By the end of this video, your .NET Core 9 Web API will be live on Azure, fully automated with Azure DevOps CI/CD! 🚀
+
+-  ### **Deploy Angular 19 to Azure App Service | CI/CD with Azure DevOps**
+     In this step-by-step tutorial, we will deploy an Angular 19 app to Azure App Service using Azure DevOps CI/CD. This video covers the complete process, from creating a free F1 App Service, setting up Azure DevOps repositories, configuring CI/CD pipelines, using a service principal for secure deployment, and handling environment settings in Azure.
+
+    🔹 What You’ll Learn in This Video:
+    -  ✅ Create an Angular 19 App Service on Azure (Free F1 Plan)
+    -  ✅ Move project from GitHub to Azure DevOps
+    -  ✅ Set up CI/CD Pipelines for automated Angular deployment
+    -  ✅ Use Service Principal for secure authentication
+    -  ✅ Configure Build & Release Pipelines to deploy Angular
+    -  ✅ Manage environment variables & settings in Azure
+
+    By the end of this video, your Angular 19 app will be live on Azure, fully automated with Azure DevOps CI/CD! 🚀
+
+
+-  ### **Mastering Azure Application Insights For PRO API Monitoring**
+     In this video, we will integrate Azure Application Insights into a .NET Core 9 Web API to monitor performance, detect failures, and log application telemetry. Additionally, we will cover global exception handling and how to return meaningful error responses, ensuring a better user experience and enabling users to contact support when issues arise.
+
+    🔹 What You’ll Learn in This Video:
+    -  ✅ Set up Azure Application Insights for real-time monitoring
+    -  ✅ Track API requests, failures, and performance metrics
+    -  ✅ Implement Global Exception Handling in .NET Core 9
+    -  ✅ Return structured error responses with relevant details
+    -  ✅ Include user-friendly support info in API error messages
+    -  ✅ Real-world debugging & troubleshooting best practices
+
+    By the end of this tutorial, your .NET Core 9 Web API will be equipped with robust monitoring and error handling, making it production-ready with detailed insights for debugging! 🚀
+
+
+-  ### **Handle 500 Errors Gracefully in Angular 🚀 | Global Exception Handling & Toastr Notifications**
+    Handling errors properly is crucial for a great user experience! In this video, we will implement global exception handling in Angular using an HTTP Interceptor to catch 500 Internal Server Errors returned from a .NET Core Web API. We will display a persistent Toastr notification with a request ID, allowing users to contact support if needed.
+
+    🔥 What You’ll Learn:
+    - ✅ Create an HTTP Interceptor to catch API errors globally.
+    - ✅ Display Toastr notifications for errors, keeping them visible until closed.
+    - ✅ Extract and show request IDs from API error responses.
+    - ✅ Improve user experience by handling errors in a real-world scenario.
+
+    If you're working with Angular and .NET Core APIs, this is a must-watch! 🚀
+
+-  ### **Set Up Azure App Insights Alerts for 500 Errors | Monitor & Detect API Failures**
+    Proactively monitor your .NET Core Web API errors with Azure Application Insights! In this video, we’ll set up alerts for 500 exceptions in Azure App Insights, ensuring that critical errors are detected and addressed quickly.
+
+    🔥 What You’ll Learn:
+    - ✅ Configure Azure App Insights Alerts to detect API failures automatically.
+    - ✅ Use a custom Kusto Query to fetch and track exceptions.
+    - ✅ Receive real-time notifications when a 500 Internal Server Error occurs.
+    - ✅ Improve API reliability and quickly respond to application failures.
+
+🔔 This alert setup is possible because we previously configured App Insights for our Web API. If you haven’t done that yet, check out our earlier video!
+
+-  ### **Azure Functions Guide: Create .NET Core 9 Isolated HTTP Trigger for Email Alerts**
+     Azure Functions provide a serverless computing model, making it easy to run event-driven code without managing infrastructure. In this video, we will:
+    - ✅ Understand Azure Functions – What they are and when to use them
+    - ✅ Create an Azure Function in the portal
+    - ✅ Build an HTTP-triggered function in Visual Studio using .NET Core 9 (STS) isolated model
+    - ✅ Accept userId and notificationId as request body
+    - ✅ Fetch notification details from a database and send an email to the user
+    - ✅ Learn how serverless functions work with databases and external services
+
+    This real-world example demonstrates how to use Azure Functions for automating tasks like sending notifications with minimal infrastructure overhead.
+
+-  ### **CI/CD for Azure Functions: Deploy .NET Core 9 Function App via Azure DevOps**
+    Automate your Azure Function App deployment with Azure DevOps CI/CD pipeline! In this video, we will:
+    - ✅ Push the Azure Function App code to Azure DevOps
+    - ✅ Set up a CI/CD pipeline to automatically build and deploy the function
+    - ✅ Use the Azure Function App created in the previous video
+    - ✅ Configure application settings in the Azure portal for smooth execution
+    - ✅ Ensure secure and efficient deployment with best practices
+
+    This tutorial eliminates manual deployments and ensures continuous integration and delivery for serverless applications.
+
+-  ### **Azure AD B2C API Connector: Enrich JWT Tokens with User Data via Azure Functions**
+    Enhance Azure AD B2C authentication by integrating an API Connector with Azure Functions! 🚀 In this video, we will:
+    - ✅ Add two more HTTP trigger functions to our existing Azure Function App
+    - ✅ Integrate one function with Azure AD B2C API Connector to handle authentication requests
+    - ✅ Read token information, fetch user details from the database, and update the UserProfile table
+    - ✅ Enrich Azure AD B2C tokens with additional claims like UserID and Role
+    - ✅ Demonstrate how this enriched token will be used later in Angular for role-based access control
+
+    This tutorial helps customize authentication flows, ensuring better security and a personalized experience for users.
+
+-  ### **.NET Core Background Service | Automate Database Tasks in Web API**
+    Learn how to implement a background service in .NET Core Web API that runs automatically and interacts with a database! 🚀 In this video, we will:
+
+    - ✅ Create a Background Service in .NET Core Web API
+    - ✅ Configure it to run every hour to process new records in the Notification table
+    - ✅ Retrieve all users from the UserProfile table
+    - ✅ Insert new notification records for each user into the UserNotification table
+    - ✅ Understand how a background service interacts with a database behind the scenes
+
+    This tutorial is perfect for automating scheduled tasks like notifications, cleanups, and background data processing in your ASP.NET Core applications!
+
+-  ### **Automate Emails Like a Pro! Azure Function Timer & HTTP Trigger in .NET**
+    In this video, we will explore Azure Functions with both Timer and HTTP Triggers to automate email notifications! 🚀 Here's what you'll learn:
+
+    - ✅ Create a Timer-Triggered Azure Function to check the UserNotification table for unsent notifications
+    - ✅ Invoke another HTTP-triggered Azure Function to send emails
+    - ✅ Pass UserId & NotificationId dynamically to trigger the email-sending function
+    - ✅ Configure local settings & Azure Function App settings for seamless execution
+    - ✅ Understand function-to-function communication in Azure
+
+    This tutorial is perfect for implementing scheduled tasks, event-driven notifications, and serverless automation using .NET Core 9 (Isolated Model) with Azure Functions.
+
+-  ### **Effortless & Secure Image Upload to Azure | Angular & .NET Core API Guide**
+    🚀 Learn how to securely upload images from an Angular app to Azure Storage using .NET Core API! In this step-by-step guide, we will:
+
+    - ✅ Create API Endpoints to handle image uploads
+    - ✅ Upload Images from Angular App with a simple UI
+    - ✅ Securely Store Images in a private Azure Storage container
+    - ✅ Save Image URLs in the UserProfile table for future retrieval
+    - ✅ Best Practices for Secure File Upload & Storage
+
+    📢 By the end of this video, you’ll be able to integrate secure image uploads in your own applications!
+
+-  ### **🔒 Protect Your Azure Storage! Generate SAS Token in .NET Core API**
+    🔐 Secure Azure Storage with SAS Tokens! In this video, we’ll show you how to generate SAS tokens in .NET Core API to securely access and manage user files in Azure Blob Storage.
+
+    - ✅ Generate SAS Token in .NET Core API to control access to private Azure Storage containers
+    - ✅ User-Specific Access – Ensure only logged-in users can access their images
+    - ✅ Set expiry & permissions for controlled, time-bound access to files
+    - ✅ Use the SAS URL in Angular to display images securely and privately
+    - ✅ Best Practices for securing private files in Azure Storage
+
+    🚀 By the end of this video, you’ll know how to securely manage and control file access in Azure Storage using SAS tokens and .NET Core API. Protect user images and other private content with ease!
+
+-  ### **Securely Fetch Azure AD B2C Data with .NET Core & Microsoft Graph API**
+    🔍 Want to unlock user details from Azure AD B2C? In this step-by-step video, we will:
+
+    - ✅ Set up App Registration for seamless access to Microsoft Graph API 
+    - ✅ Configure API Permissions to securely retrieve Azure AD B2C user information 
+    - ✅ Implement Graph API calls within your .NET Core Web API
+    - ✅ Fetch key user details like name, email, and roles for your app 
+    - ✅ Real-world use case: How to enrich user data in your applications
+
+    🚀 By the end of this video, you’ll have the skills to securely fetch and utilize Azure AD B2C user data via Microsoft Graph API in your .NET Core applications!
+
+-  ### **Master Full-Stack Development with Angular, .NET Core & Azure | Build Real-World App**
+
+Full Video https://youtu.be/zlybQJVLYrQ
+
+
 
 ### Project Setup
 
