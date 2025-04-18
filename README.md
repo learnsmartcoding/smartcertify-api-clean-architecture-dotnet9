@@ -45,7 +45,50 @@ In this video, learn how to install SQL Express, SQL Server Management Studio (S
    - [Azure Data Studio](https://azure.microsoft.com/en-us/products/data-studio)
    - [Azure Data Studio Download Link](https://go.microsoft.com/fwlink/?linkid=2216158&clcid=0x409)
    
+
 ---
+💬 Got questions or stuck? Drop a comment or join our Telegram community for quick help!
+
+💡 Want to ask questions, discuss coding, and interact with others?
+👉 Join our community group here: t.me/LearnSmartCodingYTCommunity
+
+## Video Timestamp:
+- 00:00 - App Demo & Features Overview  
+- 06:35 - Architecture & Tech Stack Explained  
+- 10:30 - Install SQL Tools & Connect to DB  
+- 19:22 - SQL Basics for Beginners  
+- 44:23 - Database Design: Tables, Keys, Constraints  
+- 1:00:16 - .NET Core 9 Web API Setup (Clean Architecture)  
+- 1:25:41 - Git & Azure DevOps for Beginners  
+- 1:42:31 - Azure Policy to Save Costs  
+- 2:01:29 - Secure Azure SQL Connections  
+- 2:09:45 - Angular 19 Standalone Components  
+- 2:31:51 - Angular Data Binding & Directives  
+- 2:55:18 - Lazy Loading & Routing in Angular  
+- 3:09:16 - Angular Signals & State Management  
+- 3:26:52 - Full CRUD API with Patch + Validation  
+- 4:51:00 - Reusable API Service in Angular  
+- 5:02:18 - Input/Output Filters & Component Comm  
+- 5:24:14 - Secure Apps with Azure AD B2C  
+- 6:12:20 - Deploy .NET API to Azure with CI/CD  
+- 6:51:24 - Deploy Angular 19 to Azure with CI/CD  
+- 7:18:01 - Monitor APIs with App Insights  
+- 7:36:44 - Handle 500 Errors in Angular with Toast  
+- 7:41:33 - Set Alerts for 500 Errors in App Insights  
+- 7:52:13 - Azure Functions HTTP Trigger (Email Alerts)  
+- 8:15:28 - CI/CD for Azure Functions with DevOps  
+- 8:34:20 - Enrich JWT with Azure AD B2C API Connector  
+- 8:51:56 - Background Service for DB Tasks  
+- 9:00:13 - Email Automation via Timer Trigger  
+- 9:08:12 - Public vs Private Azure Containers  
+- 9:23:37 - Secure Image Upload: Angular + .NET  
+- 9:33:03 - Generate Secure SAS Tokens in .NET  
+- 9:39:55 - Fetch Azure AD B2C Data with Graph API  
+- 9:57:14 - Role-Based Auth with AD B2C & Angular  
+- 10:04:20 - Azure Key Vault + Managed Identity  
+- 10:33:35 - Managed Identity vs Service Principal  
+
+Demo App: https://smartcertify-web.azurewebsites.net/home
 ---
 
 ### **SQL Basics for Beginners: Step-by-Step Guide with Examples**
