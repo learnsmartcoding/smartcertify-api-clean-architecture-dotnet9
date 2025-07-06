@@ -126,7 +126,7 @@ namespace LSC.SmartCertify.API
                 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                   .AddMicrosoftIdentityWebApi(options =>
                   {
-                      builder.Configuration.Bind("AzureAdB2C", options);
+                      builder.Configuration.Bind("AzureAd", options);
 
                       options.Events = new JwtBearerEvents
                       {                        
@@ -163,7 +163,7 @@ namespace LSC.SmartCertify.API
                               return Task.CompletedTask;
                           }
                       };
-                  }, options => { builder.Configuration.Bind("AzureAdB2C", options); });
+                  }, options => { builder.Configuration.Bind("AzureAd", options); });
 
                 // The following flag can be used to get more descriptive errors in development environments
                 IdentityModelEventSource.ShowPII = true;
@@ -178,7 +178,7 @@ namespace LSC.SmartCertify.API
 
                 // Register the background service
                 builder.Services.AddHostedService<NotificationBackgroundService>();
-                builder.Services.AddHostedService<OnboardUserBackgroundService>();
+                //builder.Services.AddHostedService<OnboardUserBackgroundService>(); 
 
                 // In production, modify this with the actual domains you want to allow
                 builder.Services.AddCors(options =>
@@ -236,6 +236,7 @@ namespace LSC.SmartCertify.API
 
                 app.UseHttpsRedirection();
 
+                app.UseAuthentication();
                 app.UseAuthorization();
 
 

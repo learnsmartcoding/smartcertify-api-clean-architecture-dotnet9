@@ -10,7 +10,7 @@ namespace LSC.SmartCertify.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Read")]
+    [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "AzureAD:Scopes:Read",RequiredAppPermissionsConfigurationKey = "AzureAD:AppPermissions:Read")]
     [Authorize]
     public class QuestionsController : ControllerBase
     {
@@ -43,7 +43,7 @@ namespace LSC.SmartCertify.API.Controllers
         }
 
         [HttpPost]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "AzureAD:Scopes:Write", RequiredAppPermissionsConfigurationKey = "AzureAD:AppPermissions:Write")]
         [Authorize]
         [AdminRole]
         public async Task<IActionResult> CreateQuestion([FromBody] CreateQuestionDto dto)
@@ -53,7 +53,7 @@ namespace LSC.SmartCertify.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "AzureAD:Scopes:Write", RequiredAppPermissionsConfigurationKey = "AzureAD:AppPermissions:Write")]
         [Authorize]
         [AdminRole]
         public async Task<IActionResult> UpdateQuestion(int id, [FromBody] UpdateQuestionDto dto)
@@ -63,7 +63,7 @@ namespace LSC.SmartCertify.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "AzureAD:Scopes:Write", RequiredAppPermissionsConfigurationKey = "AzureAD:AppPermissions:Write")]
         [Authorize]
         [AdminRole]
         public async Task<IActionResult> DeleteQuestion(int id)
@@ -74,7 +74,7 @@ namespace LSC.SmartCertify.API.Controllers
 
 
         [HttpPost("CreateQuestionChoices")]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "AzureAD:Scopes:Write", RequiredAppPermissionsConfigurationKey = "AzureAD:AppPermissions:Write")]
         [Authorize]
         [AdminRole]
         public async Task<IActionResult> CreateQuestionChoices([FromBody] QuestionDto dto)
@@ -84,7 +84,7 @@ namespace LSC.SmartCertify.API.Controllers
         }
 
         [HttpPut("UpdateQuestionAndChoices/{id}")]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "AzureAD:Scopes:Write", RequiredAppPermissionsConfigurationKey = "AzureAD:AppPermissions:Write")]
         [Authorize]
         [AdminRole]
         public async Task<IActionResult> UpdateQuestionAndChoices(int id, [FromBody] QuestionDto dto)

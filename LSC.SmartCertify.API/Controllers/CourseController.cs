@@ -92,7 +92,7 @@ namespace LSC.SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]        
+        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "AzureAD:Scopes:Write", RequiredAppPermissionsConfigurationKey = "AzureAD:AppPermissions:Write")]        
         [AdminRole]
         public async Task<IActionResult> CreateCourse([FromBody] CreateCourseDto createCourseDto)
         {
@@ -121,7 +121,7 @@ namespace LSC.SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "AzureAD:Scopes:Write", RequiredAppPermissionsConfigurationKey = "AzureAD:AppPermissions:Write")]
         [AdminRole]
         public async Task<IActionResult> UpdateCourse(int id, [FromBody] UpdateCourseDto updateCourseDto)
         {
@@ -147,7 +147,7 @@ namespace LSC.SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "AzureAD:Scopes:Write", RequiredAppPermissionsConfigurationKey = "AzureAD:AppPermissions:Write")]
         [AdminRole]
         public async Task<IActionResult> DeleteCourse(int id)
         {
@@ -167,7 +167,7 @@ namespace LSC.SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "AzureAD:Scopes:Write", RequiredAppPermissionsConfigurationKey = "AzureAD:AppPermissions:Write")]
         [AdminRole]
         public async Task<IActionResult> UpdateDescription([FromRoute] int id, [FromBody] CourseUpdateDescriptionDto model)
         {
