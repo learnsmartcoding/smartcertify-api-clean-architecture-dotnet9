@@ -24,6 +24,7 @@ public partial class Exam
 
     [StringLength(2000)]
     public string? Feedback { get; set; }
+    public bool? IsPracticeMode { get; set; }
 
     [ForeignKey("CourseId")]
     [InverseProperty("Exams")]

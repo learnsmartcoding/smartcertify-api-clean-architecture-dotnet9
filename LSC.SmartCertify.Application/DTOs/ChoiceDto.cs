@@ -14,6 +14,7 @@ namespace LSC.SmartCertify.Application.DTOs
         public string ChoiceText { get; set; } = string.Empty;
         public bool IsCode { get; set; }
         public bool IsCorrect { get; set; }
+        public string AnswerDetails { get; set; }
     }
 
     public class CreateChoiceDto
@@ -27,6 +28,7 @@ namespace LSC.SmartCertify.Application.DTOs
 
         public bool IsCode { get; set; }
         public bool IsCorrect { get; set; }
+        public string AnswerDetails { get; set; }
     }
 
     public class UpdateChoiceDto: UpdateUserChoice
@@ -34,7 +36,7 @@ namespace LSC.SmartCertify.Application.DTOs
         [Required]
         [StringLength(200, ErrorMessage = "Choice text cannot exceed 200 characters.")]
         public string ChoiceText { get; set; } = string.Empty;
-
+        public string AnswerDetails { get; set; }
         public bool IsCode { get; set; }
         
     }

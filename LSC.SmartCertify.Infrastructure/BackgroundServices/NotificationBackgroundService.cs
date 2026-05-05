@@ -38,7 +38,8 @@ namespace LSC.SmartCertify.Infrastructure.BackgroundServices
 
                         if (newNotifications.Any())
                         {
-                            var users = dbContext.UserProfiles.ToList();
+                            //send only to logged in users
+                            var users = dbContext.UserProfiles.Where(w => !string.IsNullOrEmpty(w.AdObjId)).ToList();
 
                             foreach (var notification in newNotifications)
                             {

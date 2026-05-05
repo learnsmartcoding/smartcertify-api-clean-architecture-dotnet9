@@ -1,5 +1,6 @@
 
 using FluentValidation;
+using LSC.SmartCertify.API.Controllers;
 using LSC.SmartCertify.API.Filters;
 using LSC.SmartCertify.API.Middlewares;
 using LSC.SmartCertify.Application;
@@ -7,6 +8,7 @@ using LSC.SmartCertify.Application.DTOValidations;
 using LSC.SmartCertify.Application.Interfaces.Certification;
 using LSC.SmartCertify.Application.Interfaces.Common;
 using LSC.SmartCertify.Application.Interfaces.Courses;
+using LSC.SmartCertify.Application.Interfaces.EmailNotification;
 using LSC.SmartCertify.Application.Interfaces.Graph;
 using LSC.SmartCertify.Application.Interfaces.ManageUser;
 using LSC.SmartCertify.Application.Interfaces.QuestionsChoice;
@@ -14,18 +16,18 @@ using LSC.SmartCertify.Application.Interfaces.Storage;
 using LSC.SmartCertify.Application.Services;
 using LSC.SmartCertify.Application.Services.Certification;
 using LSC.SmartCertify.Application.Services.Common;
+using LSC.SmartCertify.Application.Services.EmailNotification;
 using LSC.SmartCertify.Application.Services.Graph;
 using LSC.SmartCertify.Application.Services.ManageUser;
 using LSC.SmartCertify.Infrastructure;
 using LSC.SmartCertify.Infrastructure.BackgroundServices;
+using LSC.SmartCertify.Infrastructure.Security;
 using LSC.SmartCertify.Infrastructure.Services.Storage;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
-using Microsoft.IdentityModel.Logging;
-using Scalar.AspNetCore;
 using Serilog;
 using Serilog.Templates;
 using System.Net;
@@ -93,8 +95,8 @@ namespace LSC.SmartCertify.API
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
-                //builder.Services.AddHttpClient<YouTubeService>();
-                //builder.Services.Configure<YouTubeOptions>(builder.Configuration.GetSection("YouTube"));
+                builder.Services.AddHttpClient<YouTubeService>();
+                builder.Services.Configure<YouTubeOptions>(builder.Configuration.GetSection("YouTube"));
 
 
                 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -114,71 +116,62 @@ namespace LSC.SmartCertify.API
                 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
                 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
                 builder.Services.AddScoped<IUserClaims, UserClaims>();
+                builder.Services.AddHttpContextAccessor();
+                builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
                 builder.Services.AddTransient<RequestBodyLoggingMiddleware>();
                 builder.Services.AddTransient<ResponseBodyLoggingMiddleware>();                          
 
                 // Add FluentValidation
                 builder.Services.AddValidatorsFromAssemblyContaining<CreateCourseValidator>();
                 builder.Services.AddValidatorsFromAssemblyContaining<UpdateCourseValidator>();
-                builder.Services.AddAutoMapper(typeof(MappingProfile));
+                // Register AutoMapper profiles
+                builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
-                #region AD B2C configuration
+                #region Entra ID configuration
                 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                  .AddMicrosoftIdentityWebApi(options =>
-                  {
-                      builder.Configuration.Bind("AzureAd", options);
+           .AddMicrosoftIdentityWebApi(options =>
+           {
+               builder.Configuration.Bind("AzureAd", options);
+               options.Events = new JwtBearerEvents();
 
-                      options.Events = new JwtBearerEvents
-                      {                        
+               /// <summary>
+               /// Below you can do extended token validation and check for additional claims, such as:
+               ///
+               /// - check if the caller's tenant is in the allowed tenants list via the 'tid' claim (for multi-tenant applications)
+               /// - check if the caller's account is homed or guest via the 'acct' optional claim
+               /// - check if the caller belongs to right roles or groups via the 'roles' or 'groups' claim, respectively
+               ///
+               /// Bear in mind that you can do any of the above checks within the individual routes and/or controllers as well.
+               /// For more information, visit: https://docs.microsoft.com/azure/active-directory/develop/access-tokens#validate-the-user-has-permission-to-access-this-data
+               /// </summary>
 
-                          OnTokenValidated = context =>
-                          {
-                              var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+               //options.Events.OnTokenValidated = async context =>
+               //{
+               //    string[] allowedClientApps = { /* list of client ids to allow */ };
 
-                              // Access the scope claim (scp) directly
-                              var scopeClaim = context.Principal?.Claims.FirstOrDefault(c => c.Type == "scp")?.Value;
+               //    string clientappId = context?.Principal?.Claims
+               //        .FirstOrDefault(x => x.Type == "azp" || x.Type == "appid")?.Value;
 
-                              if (scopeClaim != null)
-                              {
-                                  logger.LogInformation("Scope found in token: {Scope}", scopeClaim);
-                              }
-                              else
-                              {
-                                  logger.LogWarning("Scope claim not found in token.");
-                              }
+               //    if (!allowedClientApps.Contains(clientappId))
+               //    {
+               //        throw new System.Exception("This client is not authorized");
+               //    }
+               //};
+           }, options => { builder.Configuration.Bind("AzureAd", options); });
 
-
-                              return Task.CompletedTask;
-                          },
-                          OnAuthenticationFailed = context =>
-                          {
-                              var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
-                              logger.LogError("Authentication failed: {Message}", context.Exception.Message);
-                              return Task.CompletedTask;
-                          },
-                          OnChallenge = context =>
-                          {
-                              var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
-                              logger.LogError("Challenge error: {ErrorDescription}", context.ErrorDescription);
-                              return Task.CompletedTask;
-                          }
-                      };
-                  }, options => { builder.Configuration.Bind("AzureAd", options); });
-
-                // The following flag can be used to get more descriptive errors in development environments
-                IdentityModelEventSource.ShowPII = true;
-                #endregion  AD B2C configuration
+                #endregion  Entra ID configuration
 
                 builder.Services.AddHttpClient();
-
-                builder.Services.AddScoped<IStorageService, StorageService>();
                 builder.Services.AddSingleton<GraphAuthService>();
                 builder.Services.AddScoped<IGraphAuthService, GraphAuthService>();
                 builder.Services.AddScoped<IGraphService, GraphService>();
+                builder.Services.AddScoped<IEmailNotification, EmailNotification>();
+
+                builder.Services.AddScoped<IStorageService, StorageService>();
 
                 // Register the background service
                 builder.Services.AddHostedService<NotificationBackgroundService>();
-                //builder.Services.AddHostedService<OnboardUserBackgroundService>(); 
+                builder.Services.AddHostedService<OnboardUserBackgroundService>();
 
                 // In production, modify this with the actual domains you want to allow
                 builder.Services.AddCors(options =>
@@ -186,8 +179,10 @@ namespace LSC.SmartCertify.API
                     options.AddPolicy("default", policy =>
                     {
                         policy.AllowAnyOrigin()
+                              //WithOrigins("http://localhost:4200", "https://smartlearnbykarthik.azurewebsites.net") // Corrected frontend URL without trailing slash
                               .AllowAnyHeader()
                               .AllowAnyMethod();
+                        //.AllowCredentials();  // Required for SignalR
                     });
                 });
 
@@ -219,24 +214,13 @@ namespace LSC.SmartCertify.API
                 // Configure the HTTP request pipeline.
                 //if (app.Environment.IsDevelopment())
                 {
-                    app.MapOpenApi();
-                    app.MapScalarApiReference(options =>
-                    {
-                        options.WithTitle("My API");
-                        options.WithTheme(ScalarTheme.BluePlanet);
-                        options.WithSidebar(true);
-                    });
-
-                    app.UseSwaggerUi(options =>
-                    {
-                        options.DocumentPath = "openapi/v1.json";
-                    });
+                    app.UseOpenApi();          // Serves /swagger/v1/swagger.json
+                    app.UseSwaggerUi();       // Serves Swagger UI at /swagger
 
                 }
 
                 app.UseHttpsRedirection();
 
-                app.UseAuthentication();
                 app.UseAuthorization();
 
 

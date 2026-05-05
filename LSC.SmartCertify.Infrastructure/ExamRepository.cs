@@ -102,7 +102,8 @@ namespace LSC.SmartCertify.Infrastructure
                     Description = e.course.Description,
                     Status = e.exam.Status,
                     StartedOn = e.exam.StartedOn,
-                    FinishedOn = e.exam.FinishedOn
+                    FinishedOn = e.exam.FinishedOn,
+                    IsPracticeMode = e.exam.IsPracticeMode ?? false
                 }).ToListAsync();
 
 
@@ -120,7 +121,8 @@ namespace LSC.SmartCertify.Infrastructure
                 Status = s.Status,
                 StartedOn = s.StartedOn,
                 FinishedOn = s.FinishedOn,
-                QuestionIds = s.ExamQuestions.Select(s => s.QuestionId).ToList()
+                QuestionIds = s.ExamQuestions.Select(s => s.QuestionId).ToList(),
+                IsPracticeMode = s.IsPracticeMode ?? false
             }).FirstOrDefaultAsync(w => w.ExamId == examId);
         }
 

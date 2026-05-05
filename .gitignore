@@ -191,3 +191,5 @@ healthchecksdb
 *.exe
 /logs/
 /logs
+/.appdata/NuGet
+/.dotnet_home/.dotnet

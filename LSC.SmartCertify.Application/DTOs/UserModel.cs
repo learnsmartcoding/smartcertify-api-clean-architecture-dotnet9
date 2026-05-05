@@ -28,8 +28,18 @@ namespace LSC.SmartCertify.Application.DTOs
 
     public class UpdateUserProfileModel
     {
-        public required int UserId { get; set; }
         public IFormFile? Picture { get; set; }
+    }
+
+    public class CurrentUserBootstrapModel
+    {
+        public int UserId { get; set; }
+        public string DisplayName { get; set; } = null!;
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string? ProfileImageUrl { get; set; }
+        public List<UserRoleModel> Roles { get; set; } = new();
     }
 
     public class UserModel

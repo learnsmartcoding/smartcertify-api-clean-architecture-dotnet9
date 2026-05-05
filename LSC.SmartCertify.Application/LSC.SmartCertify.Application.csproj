@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -10,13 +10,13 @@
     <ProjectReference Include="..\LSC.SmartCertify.Domain\LSC.SmartCertify.Domain.csproj" />
   </ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="AutoMapper" Version="13.0.1" />
-		<PackageReference Include="FluentValidation" Version="11.11.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
-		<PackageReference Include="Microsoft.Identity.Web" Version="1.25.1" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="AutoMapper" Version="16.1.1" />
+		<PackageReference Include="FluentValidation" Version="12.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.9" />
+		<PackageReference Include="Microsoft.Identity.Web" Version="4.9.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 		<PackageReference Include="SendGrid" Version="9.29.3" />
 		<PackageReference Include="SendGrid.Extensions.DependencyInjection" Version="1.0.1" />
-		<PackageReference Include="System.Security.Cryptography.Xml" Version="9.0.1" />
+		<PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.7" />
 	</ItemGroup>
 </Project>

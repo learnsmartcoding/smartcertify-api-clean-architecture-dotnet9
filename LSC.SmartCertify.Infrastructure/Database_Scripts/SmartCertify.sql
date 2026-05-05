@@ -193,3 +193,5 @@ GO
 
 
 
+ALTER TABLE Choices ADD AnswerDetails NVARCHAR(MAX) NULL
+ALTER TABLE Exams ADD IsPracticeMode bit NULL

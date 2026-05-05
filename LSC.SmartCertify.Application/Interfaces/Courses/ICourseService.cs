@@ -12,7 +12,7 @@ namespace LSC.SmartCertify.Application.Interfaces.Courses
         Task<IEnumerable<CourseDto>> GetAllCoursesAsync();
         Task<CourseDto?> GetCourseByIdAsync(int courseId);
         Task<bool> IsTitleDuplicateAsync(string title);
-        Task AddCourseAsync(CreateCourseDto createCourseDto);
+        Task AddCourseAsync(CreateCourseDto createCourseDto, int createdByUserId);
         Task UpdateCourseAsync(int courseId, UpdateCourseDto updateCourseDto);
         Task DeleteCourseAsync(int courseId);
         Task UpdateDescriptionAsync(int courseId, string description);

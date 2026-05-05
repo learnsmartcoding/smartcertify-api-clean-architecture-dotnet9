@@ -18,6 +18,7 @@ public partial class Choice
     public bool IsCode { get; set; }
 
     public bool IsCorrect { get; set; }
+    public string? AnswerDetails { get; set; } = null!;
 
     [InverseProperty("SelectedChoice")]
     public virtual ICollection<ExamQuestion> ExamQuestions { get; set; } = new List<ExamQuestion>();

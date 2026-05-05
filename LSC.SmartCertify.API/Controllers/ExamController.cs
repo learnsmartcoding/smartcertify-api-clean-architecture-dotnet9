@@ -2,22 +2,23 @@
 using LSC.SmartCertify.Application.DTOValidations;
 using LSC.SmartCertify.Application.Interfaces.Certification;
 using LSC.SmartCertify.Application.Interfaces.Common;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LSC.SmartCertify.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ExamController : ControllerBase
     {
         private readonly IExamService _examService;
-        private readonly IUserClaims userClaims;
+        private readonly ICurrentUserService currentUserService;
 
-        public ExamController(IExamService examService, IUserClaims userClaims)
+        public ExamController(IExamService examService, ICurrentUserService currentUserService)
         {
             _examService = examService;
-            this.userClaims = userClaims;
+            this.currentUserService = currentUserService;
         }
 
         [HttpPost("start-exam")]
@@ -34,7 +35,13 @@ namespace LSC.SmartCertify.API.Controllers
 
             try
             {
-                var result = await _examService.StartExamAsync(request.CourseId, request.UserId);
+                var currentUser = await currentUserService.GetCurrentUserProfileAsync();
+                if (currentUser is null)
+                {
+                    return Unauthorized("Current user was not found in UserProfile.");
+                }
+
+                var result = await _examService.StartExamAsync(request.CourseId, currentUser.UserId, request.IsPracticeMode, request.NoOfQuestions);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -53,6 +60,12 @@ namespace LSC.SmartCertify.API.Controllers
         [HttpPut("update-user-choice/{id}")]
         public async Task<IActionResult> UpdateUserChoice(int id, [FromBody] UpdateUserQuestionChoiceDto dto)
         {
+            var ownershipResult = await ValidateCurrentUserExamAsync(dto.ExamId);
+            if (ownershipResult is not null)
+            {
+                return ownershipResult;
+            }
+
             //TODO Validation of request model pending
             await _examService.UpdateUserChoiceAsync(id, dto);
             return NoContent();
@@ -61,19 +74,29 @@ namespace LSC.SmartCertify.API.Controllers
         [HttpGet("get-user-exam-questions/{examId}")]
         public async Task<IActionResult> GetUserExamQuestions(int examId)
         {
+            var ownershipResult = await ValidateCurrentUserExamAsync(examId);
+            if (ownershipResult is not null)
+            {
+                return ownershipResult;
+            }
+
             //TODO Validation of request model pending
             var result = await _examService.GetExamQuestionsAsync(examId);
             return Ok(result);
         }
 
 
-        [HttpGet("get-user-exams/{userId}")]
-        public async Task<IActionResult> GetUserExams(int userId = 0)
+        [HttpGet("get-user-exams/{userId?}")]
+        public async Task<IActionResult> GetUserExams()
         {
-            userId = userId == 0 ? userClaims.GetUserId() : userId;
+            var currentUser = await currentUserService.GetCurrentUserProfileAsync();
+            if (currentUser is null)
+            {
+                return Unauthorized("Current user was not found in UserProfile.");
+            }
 
             //TODO Validation of request model pending
-            var result = await _examService.GetUserExamsAsync(userId);
+            var result = await _examService.GetUserExamsAsync(currentUser.UserId);
             return Ok(result);
         }
 
@@ -86,7 +109,13 @@ namespace LSC.SmartCertify.API.Controllers
             if (result == null)
                 return NotFound();
 
-            if (result.UserId != userClaims.GetUserId())
+            var currentUser = await currentUserService.GetCurrentUserProfileAsync();
+            if (currentUser is null)
+            {
+                return Unauthorized("Current user was not found in UserProfile.");
+            }
+
+            if (result.UserId != currentUser.UserId)
             {
                 return new ForbidResult();
             }
@@ -95,7 +124,15 @@ namespace LSC.SmartCertify.API.Controllers
 
         [HttpPut("update-exam-status/{examId}")]
         public async Task<IActionResult> UpdateExamStatus(int examId, [FromBody] ExamFeedbackDto feedback)
-        {           
+        {
+            var ownershipResult = await ValidateCurrentUserExamAsync(examId);
+            if (ownershipResult is not null)
+            {
+                return ownershipResult;
+            }
+
+            feedback.ExamId = examId;
+
             //TODO Validation of request model pending
             await _examService.SaveExamStatus(feedback);
             return NoContent();
@@ -104,12 +141,35 @@ namespace LSC.SmartCertify.API.Controllers
         [HttpGet("exam-details/{examId}")]
         public async Task<IActionResult> GetExamDetails(int examId)
         {
+            var ownershipResult = await ValidateCurrentUserExamAsync(examId);
+            if (ownershipResult is not null)
+            {
+                return ownershipResult;
+            }
+
             var result = await _examService.GetExamDetailsAsync(examId);
 
             if (result == null)
                 return NotFound(new { Message = "Exam not found." });
 
             return Ok(result);
+        }
+
+        private async Task<IActionResult?> ValidateCurrentUserExamAsync(int examId)
+        {
+            var currentUser = await currentUserService.GetCurrentUserProfileAsync();
+            if (currentUser is null)
+            {
+                return Unauthorized("Current user was not found in UserProfile.");
+            }
+
+            var exam = await _examService.GetExamMetaData(examId);
+            if (exam is null)
+            {
+                return NotFound();
+            }
+
+            return exam.UserId == currentUser.UserId ? null : Forbid();
         }
 
     }
