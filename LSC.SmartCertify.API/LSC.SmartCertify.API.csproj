@@ -1,36 +1,41 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.7" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.7">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
-	  <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.0">
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.7" />
+
+
+	  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.7" />
+	  <PackageReference Include="NSwag.AspNetCore" Version="14.7.1" />
+	  
+	  <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="10.0.7">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
-	  <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
-	  <PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
-	  <PackageReference Include="Scalar.AspNetCore" Version="1.2.72" />
-	  <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
-	  <PackageReference Include="FluentValidation" Version="11.11.0" />
+	  
+	  <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+	  <PackageReference Include="FluentValidation" Version="12.1.1" />	
 
-	  <PackageReference Include="Serilog.Expressions" Version="4.0.0" />
-	  <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
-	  <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
-	  <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="8.0.0" />
+	  <PackageReference Include="Serilog.Expressions" Version="5.0.0" />
+	  <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+	  <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="5.0.1" />
+	  <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="10.0.7" />
 	  <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
 
-	  <PackageReference Include="Microsoft.Identity.Web" Version="1.25.1" />
+	  <PackageReference Include="Microsoft.Identity.Web" Version="4.9.0" />
+
+	  <!-- MCP Client SDK removed — AnthropicService now calls MCPServer via plain REST.
+	       The SDK is still used by LSC.SmartCertify.MCPServer. -->
   </ItemGroup>
 
   <ItemGroup>

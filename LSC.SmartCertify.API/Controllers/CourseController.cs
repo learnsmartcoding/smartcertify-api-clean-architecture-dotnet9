@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using LSC.SmartCertify.API.Filters.LSC.OnlineCourse.API.Common;
 using LSC.SmartCertify.Application.DTOs;
+using LSC.SmartCertify.Application.Interfaces.Common;
 using LSC.SmartCertify.Application.Interfaces.Courses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,15 +14,18 @@ namespace LSC.SmartCertify.API.Controllers
     public class CoursesController : ControllerBase
     {
         private readonly ICourseService _service;
+        private readonly ICurrentUserService currentUserService;
         private readonly IValidator<CreateCourseDto> validator;
         private readonly IValidator<UpdateCourseDto> updateValidator;
 
         public CoursesController(
             ICourseService service,
+            ICurrentUserService currentUserService,
             IValidator<CreateCourseDto> validator,
             IValidator<UpdateCourseDto> updateValidator)
         {
             _service = service;
+            this.currentUserService = currentUserService;
             this.validator = validator;
             this.updateValidator = updateValidator;
         }
@@ -92,7 +96,7 @@ namespace LSC.SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]        
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:Write")]        
         [AdminRole]
         public async Task<IActionResult> CreateCourse([FromBody] CreateCourseDto createCourseDto)
         {
@@ -103,7 +107,13 @@ namespace LSC.SmartCertify.API.Controllers
                 return BadRequest(validationResult.Errors);
             }
 
-            await _service.AddCourseAsync(createCourseDto);
+            var currentUser = await currentUserService.GetCurrentUserProfileAsync();
+            if (currentUser is null)
+            {
+                return Unauthorized("Current user was not found in UserProfile.");
+            }
+
+            await _service.AddCourseAsync(createCourseDto, currentUser.UserId);
             return CreatedAtAction(nameof(GetCourse), new { id = createCourseDto.Title }, createCourseDto);
         }
 
@@ -121,7 +131,7 @@ namespace LSC.SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:Write")]
         [AdminRole]
         public async Task<IActionResult> UpdateCourse(int id, [FromBody] UpdateCourseDto updateCourseDto)
         {
@@ -147,7 +157,7 @@ namespace LSC.SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:Write")]
         [AdminRole]
         public async Task<IActionResult> DeleteCourse(int id)
         {
@@ -167,7 +177,7 @@ namespace LSC.SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:Write")]
         [AdminRole]
         public async Task<IActionResult> UpdateDescription([FromRoute] int id, [FromBody] CourseUpdateDescriptionDto model)
         {

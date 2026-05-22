@@ -44,6 +44,9 @@ public partial class SmartCertifyContext : DbContext
 
     public virtual DbSet<UserRole> UserRoles { get; set; }
 
+    public virtual DbSet<ChatSession> ChatSessions { get; set; }
+
+    public virtual DbSet<ChatMessage> ChatMessages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -185,6 +188,34 @@ public partial class SmartCertifyContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.UserRoles)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserRole_UserProfile");
+        });
+
+        modelBuilder.Entity<ChatSession>(entity =>
+        {
+            entity.HasKey(e => e.ChatSessionId).HasName("PK_ChatSessions");
+
+            entity.Property(e => e.StartedOn).HasDefaultValueSql("(getutcdate())");
+            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getutcdate())");
+
+            entity.HasOne(d => d.User).WithMany(p => p.ChatSessions)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ChatSessions_UserProfile");
+
+            entity.HasOne(d => d.Exam).WithMany()
+                .HasForeignKey(d => d.ExamId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_ChatSessions_Exams");
+        });
+
+        modelBuilder.Entity<ChatMessage>(entity =>
+        {
+            entity.HasKey(e => e.ChatMessageId).HasName("PK_ChatMessages");
+
+            entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
+
+            entity.HasOne(d => d.ChatSession).WithMany(p => p.ChatMessages)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_ChatMessages_ChatSessions");
         });
 
         OnModelCreatingPartial(modelBuilder);

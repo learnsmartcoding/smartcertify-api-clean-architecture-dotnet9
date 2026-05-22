@@ -1,4 +1,4 @@
-# SmartCertify Clean Architecture .NET 9 API
+﻿# SmartCertify Clean Architecture .NET 9 API
 
 Welcome to the **SmartCertify Clean Architecture .NET 9 API** project! This repository showcases how to build a robust API with a clean architecture using .NET 9, following best practices to design scalable and maintainable applications. 
 
@@ -45,7 +45,6 @@ In this video, learn how to install SQL Express, SQL Server Management Studio (S
    - [Azure Data Studio](https://azure.microsoft.com/en-us/products/data-studio)
    - [Azure Data Studio Download Link](https://go.microsoft.com/fwlink/?linkid=2216158&clcid=0x409)
    
-
 ---
 💬 Got questions or stuck? Drop a comment or join our Telegram community for quick help!
 

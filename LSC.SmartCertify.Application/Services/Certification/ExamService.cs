@@ -16,10 +16,10 @@ namespace LSC.SmartCertify.Application.Services.Certification
             this.mapper = mapper;
         }
 
-        public async Task<ExamDto> StartExamAsync(int courseId, int userId)
+        public async Task<ExamDto> StartExamAsync(int courseId, int userId, bool isPractiveMode, int noOfQuestions)
         {
             // Fetch 10 random questions for the course
-            var questions = await _examRepository.GetRandomQuestionsAsync(courseId, 10);
+            var questions = await _examRepository.GetRandomQuestionsAsync(courseId, noOfQuestions);
 
             if (!questions.Any())
             {
@@ -32,7 +32,8 @@ namespace LSC.SmartCertify.Application.Services.Certification
                 CourseId = courseId,
                 UserId = userId,
                 Status = "In Progress",
-                StartedOn = DateTime.UtcNow
+                StartedOn = DateTime.UtcNow,
+                IsPracticeMode = isPractiveMode
             };
 
             // Save exam and associate questions
@@ -46,7 +47,8 @@ namespace LSC.SmartCertify.Application.Services.Certification
                 UserId = userId,
                 Status = exam.Status,
                 StartedOn = exam.StartedOn,
-                QuestionIds = questions.Select(q => q.QuestionId).ToList()
+                QuestionIds = questions.Select(q => q.QuestionId).ToList(),
+                IsPracticeMode = exam.IsPracticeMode
             };
         }
 
@@ -89,6 +91,17 @@ namespace LSC.SmartCertify.Application.Services.Certification
         public async Task<ExamResponseDto> GetExamDetailsAsync(int examId)
         {
             return await _examRepository.GetExamDetailsAsync(examId);
+        }
+
+        public async Task<ExamDto> StartCustomExamAsync(int userId, int primaryCourseId, List<int> questionIds, bool isPracticeMode)
+        {
+            if (questionIds == null || questionIds.Count == 0)
+                throw new ArgumentException("At least one question ID is required.");
+
+            if (questionIds.Count > 60)
+                throw new ArgumentException("Maximum 60 questions allowed per custom exam.");
+
+            return await _examRepository.CreateExamFromQuestionIdsAsync(userId, primaryCourseId, questionIds, isPracticeMode);
         }
     }
 

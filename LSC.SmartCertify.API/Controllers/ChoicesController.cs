@@ -8,7 +8,7 @@ namespace LSC.SmartCertify.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Read")]
+    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:Read")]
     [Authorize]
     public class ChoicesController : ControllerBase
     {
@@ -33,7 +33,7 @@ namespace LSC.SmartCertify.API.Controllers
         }
 
         [HttpPost]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:Write")]
         [Authorize]
         public async Task<IActionResult> CreateChoice([FromBody] CreateChoiceDto dto)
         {
@@ -42,7 +42,7 @@ namespace LSC.SmartCertify.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:Write")]
         [Authorize]
         public async Task<IActionResult> UpdateChoice(int id, [FromBody] UpdateChoiceDto dto)
         {
@@ -51,7 +51,7 @@ namespace LSC.SmartCertify.API.Controllers
         }
 
         [HttpPatch("{id}")]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:Write")]
         [Authorize]
         public async Task<IActionResult> UpdateUserChoice(int id, [FromBody] UpdateUserChoice dto)
         {
@@ -60,7 +60,7 @@ namespace LSC.SmartCertify.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:Write")]
         [Authorize]
         public async Task<IActionResult> DeleteChoice(int id)
         {

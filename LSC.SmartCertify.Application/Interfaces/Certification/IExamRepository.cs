@@ -15,6 +15,9 @@ namespace LSC.SmartCertify.Application.Interfaces.Certification
         Task SaveExamStatusAsync(int examId, string feedback);
 
         Task<ExamResponseDto> GetExamDetailsAsync(int examId);
+
+        /// <summary>Creates an exam from a specific list of question IDs (AI-generated custom exam).</summary>
+        Task<ExamDto> CreateExamFromQuestionIdsAsync(int userId, int primaryCourseId, List<int> questionIds, bool isPracticeMode);
     }
 
 }

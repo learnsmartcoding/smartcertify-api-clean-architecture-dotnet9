@@ -193,3 +193,83 @@ GO
 
 
 
+ALTER TABLE Choices ADD AnswerDetails NVARCHAR(MAX) NULL
+ALTER TABLE Exams ADD IsPracticeMode bit NULL
+
+-- ============================================================
+--  SmartCertify – Chat History Tables - New schema to support AI chat sessions and messages, linked to exams for context.
+--  Run once. Safe re-run guard included.
+-- ============================================================
+
+IF NOT EXISTS (
+    SELECT 1 FROM sys.tables WHERE name = 'ChatSessions' AND schema_id = SCHEMA_ID('dbo')
+)
+BEGIN
+    CREATE TABLE [dbo].[ChatSessions] (
+        [ChatSessionId]   INT            IDENTITY(1,1)  NOT NULL,
+        [UserId]          INT            NOT NULL,
+        [Title]           NVARCHAR(300)  NULL,           -- e.g. "AI Agents Exam Prep"
+                                                         -- set from first user message or exam topic
+        [ExamId]          INT            NULL,           -- populated when exam is created in this session
+        [StartedOn]       DATETIME2      NOT NULL  DEFAULT GETUTCDATE(),
+        [EndedOn]         DATETIME2      NULL,
+        [CreatedDate]     DATETIME2      NOT NULL  DEFAULT GETUTCDATE(),
+
+        CONSTRAINT [PK_ChatSessions] PRIMARY KEY CLUSTERED ([ChatSessionId]),
+        CONSTRAINT [FK_ChatSessions_UserProfile] FOREIGN KEY ([UserId])
+            REFERENCES [dbo].[UserProfile] ([UserId]),
+        CONSTRAINT [FK_ChatSessions_Exams] FOREIGN KEY ([ExamId])
+            REFERENCES [dbo].[Exams] ([ExamId])
+    );
+
+    PRINT 'Created table: ChatSessions';
+END
+ELSE
+    PRINT 'Skipped: ChatSessions already exists';
+
+GO
+
+IF NOT EXISTS (
+    SELECT 1 FROM sys.tables WHERE name = 'ChatMessages' AND schema_id = SCHEMA_ID('dbo')
+)
+BEGIN
+    CREATE TABLE [dbo].[ChatMessages] (
+        [ChatMessageId]   INT            IDENTITY(1,1)  NOT NULL,
+        [ChatSessionId]   INT            NOT NULL,
+        [Role]            NVARCHAR(20)   NOT NULL,       -- 'user' | 'assistant'
+        [Content]         NVARCHAR(MAX)  NOT NULL,
+        [Sequence]        INT            NOT NULL,       -- order within the session (1, 2, 3...)
+        [ToolsInvoked]    NVARCHAR(500)  NULL,           -- comma-separated MCP tool names assistant called
+                                                         -- e.g. 'search_courses,fetch_questions,create_custom_exam'
+        [InputTokens]     INT            NULL,           -- tokens in  (assistant messages only, for cost tracking)
+        [OutputTokens]    INT            NULL,           -- tokens out (assistant messages only, for cost tracking)
+        [CreatedOn]       DATETIME2      NOT NULL  DEFAULT GETUTCDATE(),
+
+        CONSTRAINT [PK_ChatMessages] PRIMARY KEY CLUSTERED ([ChatMessageId]),
+        CONSTRAINT [FK_ChatMessages_ChatSessions] FOREIGN KEY ([ChatSessionId])
+            REFERENCES [dbo].[ChatSessions] ([ChatSessionId])
+    );
+
+    CREATE NONCLUSTERED INDEX [IX_ChatMessages_ChatSessionId_Sequence]
+        ON [dbo].[ChatMessages] ([ChatSessionId], [Sequence]);
+
+    PRINT 'Created table: ChatMessages';
+END
+ELSE
+    PRINT 'Skipped: ChatMessages already exists';
+
+GO
+
+-- ── Quick verify ───────────────────────────────────────────
+SELECT 'ChatSessions'  AS TableName, COUNT(*) AS 'RowCount' FROM [dbo].[ChatSessions]
+UNION ALL
+SELECT 'ChatMessages', COUNT(*) FROM [dbo].[ChatMessages];
+
+
+SELECT s.ChatSessionId, s.Title, s.StartedOn, s.EndedOn, s.ExamId,
+       m.Sequence, m.Role, m.Content, m.ToolsInvoked,
+       m.InputTokens, m.OutputTokens
+FROM ChatSessions s
+JOIN ChatMessages m ON s.ChatSessionId = m.ChatSessionId
+WHERE s.UserId = 123
+ORDER BY s.StartedOn DESC, m.Sequence;

@@ -102,7 +102,8 @@ namespace LSC.SmartCertify.Infrastructure
                     Description = e.course.Description,
                     Status = e.exam.Status,
                     StartedOn = e.exam.StartedOn,
-                    FinishedOn = e.exam.FinishedOn
+                    FinishedOn = e.exam.FinishedOn,
+                    IsPracticeMode = e.exam.IsPracticeMode ?? false
                 }).ToListAsync();
 
 
@@ -120,7 +121,8 @@ namespace LSC.SmartCertify.Infrastructure
                 Status = s.Status,
                 StartedOn = s.StartedOn,
                 FinishedOn = s.FinishedOn,
-                QuestionIds = s.ExamQuestions.Select(s => s.QuestionId).ToList()
+                QuestionIds = s.ExamQuestions.Select(s => s.QuestionId).ToList(),
+                IsPracticeMode = s.IsPracticeMode ?? false
             }).FirstOrDefaultAsync(w => w.ExamId == examId);
         }
 
@@ -176,6 +178,47 @@ namespace LSC.SmartCertify.Infrastructure
             await _context.SaveChangesAsync();
         }
 
+
+        public async Task<ExamDto> CreateExamFromQuestionIdsAsync(int userId, int primaryCourseId, List<int> questionIds, bool isPracticeMode)
+        {
+            if (!await _context.UserProfiles.AnyAsync(u => u.UserId == userId))
+                throw new Exception($"UserId {userId} does not exist in the database.");
+
+            if (questionIds == null || questionIds.Count == 0)
+                throw new ArgumentException("At least one question ID is required.");
+
+            var exam = new Exam
+            {
+                CourseId = primaryCourseId,
+                UserId = userId,
+                Status = "In Progress",
+                StartedOn = DateTime.UtcNow,
+                IsPracticeMode = isPracticeMode
+            };
+
+            await _context.Exams.AddAsync(exam);
+            await _context.SaveChangesAsync();
+
+            var examQuestions = questionIds.Select(qId => new ExamQuestion
+            {
+                ExamId = exam.ExamId,
+                QuestionId = qId
+            }).ToList();
+
+            await _context.ExamQuestions.AddRangeAsync(examQuestions);
+            await _context.SaveChangesAsync();
+
+            return new ExamDto
+            {
+                ExamId = exam.ExamId,
+                CourseId = primaryCourseId,
+                UserId = userId,
+                Status = exam.Status,
+                StartedOn = exam.StartedOn,
+                QuestionIds = questionIds,
+                IsPracticeMode = exam.IsPracticeMode
+            };
+        }
 
         public async Task<ExamResponseDto> GetExamDetailsAsync(int examId)
         {

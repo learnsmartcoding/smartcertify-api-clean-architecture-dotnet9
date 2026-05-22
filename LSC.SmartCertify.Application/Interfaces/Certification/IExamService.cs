@@ -9,7 +9,7 @@ namespace LSC.SmartCertify.Application.Interfaces.Certification
 {
     public interface IExamService
     {
-        Task<ExamDto> StartExamAsync(int courseId, int userId);
+        Task<ExamDto> StartExamAsync(int courseId, int userId, bool isPractiveMode, int noOfQuestions);
         Task UpdateUserChoiceAsync(int id, UpdateUserQuestionChoiceDto dto);
         Task<List<UserExamQuestionsDto>> GetExamQuestionsAsync(int examId);
         Task<List<UserExam>> GetUserExamsAsync(int userId);
@@ -18,6 +18,9 @@ namespace LSC.SmartCertify.Application.Interfaces.Certification
         Task SaveExamStatus(ExamFeedbackDto examFeedback);
 
         Task<ExamResponseDto> GetExamDetailsAsync(int examId);
+
+        /// <summary>Creates a custom multi-course exam from AI-selected question IDs.</summary>
+        Task<ExamDto> StartCustomExamAsync(int userId, int primaryCourseId, List<int> questionIds, bool isPracticeMode);
     }
 
 }
