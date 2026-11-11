@@ -10,6 +10,7 @@ namespace LSC.SmartCertify.Application.DTOs
     public class ChoiceDto
     {
         public int ChoiceId { get; set; }
+        public int markid{ get;set;)
         public int QuestionId { get; set; }
         public string ChoiceText { get; set; } = string.Empty;
         public bool IsCode { get; set; }
